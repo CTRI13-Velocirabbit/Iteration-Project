@@ -3,10 +3,24 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import { v4 as uuid } from 'uuid';
 import styles from './home.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import HomeFilter from './HomeFilter';
+import CreateCard from '../CreateCard/CreateCard';
+import CreateFilter from './CreateFilter';
 
 const Home = () => {
   const [arrCards, setArrCards] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [createFilterIsOpen, setCreateFilterIsOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Filter placeholders
+  const filters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  // const initialFilterStates = [];
+  // filters.forEach(filter => initialFilterStates.push(false));
+
+  // const [filterStates, setFilterStates] = useState(initialFilterStates);
 
   useEffect(() => {
     // we cannot use async/await in useEffect without wrapping in outer function
@@ -21,11 +35,19 @@ const Home = () => {
 
   return (
     <>
+      <HomeFilter filters={filters} openCreateFilter={setCreateFilterIsOpen} />
       <div id={styles.createNewCard}>
-        <Link to='/createCard'>
-          Create New Card <strong>+</strong>
-        </Link>
+        <button className={styles.mainButton} onClick={() => navigate('/flashcard')}> 
+          Start Studying
+        </button>
+        <div className={styles.secondSet}>
+          <button className={styles.addButton} onClick={() => setIsOpen(!isOpen)}> 
+            Create New Card
+          </button>
+        </div>
       </div>
+        <CreateCard isOpen={isOpen} setIsOpen={setIsOpen} tags={filters}/>
+        <CreateFilter isOpen={createFilterIsOpen} setIsOpen={setCreateFilterIsOpen} />
       <div id={styles.cardsContainer}>
         {arrCards.map((card) => (
           <Card data={card} key={uuid()} />

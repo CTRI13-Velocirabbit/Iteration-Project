@@ -40,7 +40,7 @@ const App = () => {
             <Routes>
               <Route exact path="/" element={<LandingPage />} />
               <Route exact path="/library" element={<Home />} />
-              <Route exact path="/createCard" element={<CreateCard />} />
+              {/* <Route exact path="/createCard" element={<CreateCard />} /> */}
               <Route exact path="/flashcard/:id" element={<FlashCard />} />
             </Routes>
           </div>
