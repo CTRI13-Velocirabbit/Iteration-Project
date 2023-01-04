@@ -9,11 +9,11 @@ export default function HomeFilter({ filters, filterStates, openCreateFilter }) 
     filters.forEach(
        (e, index) => {
             buttons.push(
-                <FilterButton index={index} />
+                <FilterButton key={`Filter${index}`} index={index} />
             )
         }
     )
-    buttons.push(<FilterPlus openCreateFilter={openCreateFilter}/>)
+    buttons.push(<FilterPlus key={'Filter plus'} openCreateFilter={openCreateFilter}/>)
 
     return (
         <div className={styles.filterDisplay}>

@@ -10,16 +10,17 @@ import CreateFilter from './CreateFilter';
 
 const Home = () => {
   const [arrCards, setArrCards] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
   const [createFilterIsOpen, setCreateFilterIsOpen] = useState(false);
 
   const navigate = useNavigate();
 
   // Filter placeholders
   const filters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  // const initialFilterStates = [];
-  // filters.forEach(filter => initialFilterStates.push(false));
-
+  const initialFilterStates = filters.map(ele => false);
+  // const filters = ['a', 'b', 'c']
+  // const [filterState, setFilterState] = useState({a: false, b: false, c: false})
+  
   // const [filterStates, setFilterStates] = useState(initialFilterStates);
 
   useEffect(() => {
@@ -41,12 +42,12 @@ const Home = () => {
           Start Studying
         </button>
         <div className={styles.secondSet}>
-          <button className={styles.addButton} onClick={() => setIsOpen(!isOpen)}> 
+          <button className={styles.addButton} onClick={() => setCreateCardIsOpen(!createCardIsOpen)}> 
             Create New Card
           </button>
         </div>
       </div>
-        <CreateCard isOpen={isOpen} setIsOpen={setIsOpen} tags={filters}/>
+        <CreateCard isOpen={createCardIsOpen} setIsOpen={setCreateCardIsOpen} tags={filters}/>
         <CreateFilter isOpen={createFilterIsOpen} setIsOpen={setCreateFilterIsOpen} />
       <div id={styles.cardsContainer}>
         {arrCards.map((card) => (
