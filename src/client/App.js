@@ -8,6 +8,7 @@ import LandingPage from './Components/LandingPage/LandingPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail } from './Redux/slices/userSlice';
 import axios from 'axios';
+
 const App = () => {
   const leftItems = {
     home: '/library',
@@ -41,7 +42,7 @@ const App = () => {
             <Routes>
               <Route exact path="/" element={<LandingPage />} />
               <Route exact path="/library" element={<Home />} />
-              <Route exact path="/createCard" element={<CreateCard />} />
+              {/* <Route exact path="/createCard" element={<CreateCard />} /> */}
               <Route exact path="/flashcard/:id" element={<FlashCard />} />
             </Routes>
           </div>

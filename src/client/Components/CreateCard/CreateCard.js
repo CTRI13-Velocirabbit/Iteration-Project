@@ -2,8 +2,10 @@ import styles from './CreateCard.module.css';
 // import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReactDom from 'react-dom';
+import TagsDisplay from './TagsDisplay';
 
-const CreateCard = () => {
+const CreateCard = ({isOpen, setIsOpen, tags}) => {
   const [front, setFront] = useState('');
   const [back, setback] = useState('');
   const [title, setTitle] = useState('');
@@ -20,9 +22,11 @@ const CreateCard = () => {
       },
     }).then(() => navigate('/library'));
   }
+  if (!isOpen) return null;
 
-  return (
+  return ReactDom.createPortal(
     <>
+      <div id={styles.overlay} onClick={() => setIsOpen(false)} />
       <div id={styles.cardInputs}>
         <input
           id={styles.cardTitle}
@@ -39,11 +43,13 @@ const CreateCard = () => {
           onChange={(e) => setback(e.target.value)}
           placeholder='Enter Answer Here'
         ></input>
+        <TagsDisplay tags={tags}/>
         <button id={styles.addCardBtn} onClick={cb}>
           Add Card <span>&#43;</span>
         </button>
       </div>
-    </>
+    </>,
+    document.getElementById('portal')
   );
 };
 
