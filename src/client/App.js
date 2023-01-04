@@ -24,6 +24,7 @@ const App = () => {
     }).then((res) => {
       if (res.data) {
         dispatch(setEmail(res.data.email));
+        //TODO: need to set userId
       }
     });
   }, []);
