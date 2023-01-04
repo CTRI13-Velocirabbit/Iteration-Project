@@ -3,6 +3,8 @@ const router = express.Router();
 require('./auth.js');
 const passport = require('passport');
 
+// const users = require('../db/users.js');
+
 router.get('/user', (req, res) => {
   // req.user is the parsed jwt containing user information
   // console.log('L8 user info in authRouter.js', req.user);

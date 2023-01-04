@@ -26,7 +26,7 @@ router.get('/cards/nextCard/:id', async (req, res, next) => {
 
     const newIdx = (idx + 1) % ids.length;
 
-    console.log('newIdx', newIdx)
+    // console.log('newIdx', newIdx)
 
     res.status(200).json(row[newIdx]._id);
   } catch (err) {
@@ -70,16 +70,15 @@ router.get('/cards', async (req, res, next) => {
 router.post('/cards', async (req, res, next) => {
   try {
     // sanitize post data
-    const { user_id, title, front, back, difficulty, hints, scheduled } =
+    const { user_id, title, card_front, card_back, correct_count, incorrect_count } =
       req.body;
     const data = {
       user_id,
       title,
-      front,
-      back,
-      difficulty,
-      hints,
-      scheduled,
+      card_front,
+      card_back,
+      correct_count,
+      incorrect_count
     };
 
     // console.log('creating data: ', data);
@@ -97,8 +96,8 @@ router.post('/cards', async (req, res, next) => {
 router.put('/cards/:id', async (req, res, next) => {
   try {
 
-    const { _id, user_id, title, front, back, difficulty, hints, scheduled } = req.body;
-    const data = { _id, user_id, title, front, back, difficulty, hints, scheduled };
+    const { _id, user_id, title, card_front, card_back, correct_count, incorrect_count } = req.body;
+    const data = { _id, user_id, title, card_front, card_back, correct_count, incorrect_count };
 
     const row = await cards.updateCard(data);
     res.status(200).json(row);

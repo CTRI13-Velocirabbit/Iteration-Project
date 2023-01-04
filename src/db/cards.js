@@ -5,7 +5,7 @@ const cards = {};
 cards.readCard = async (id) => {
   try {
     const sql = `SELECT *
-    FROM Cards
+    FROM cards
     WHERE _id=$1;`;
     const data = await pool.query(sql, [id]);
     // TODO: validate that there is only one row
@@ -18,7 +18,7 @@ cards.readCard = async (id) => {
 cards.readAllCards = async () => {
   try {
     const sql = `SELECT *
-    FROM Cards;`;
+    FROM cards;`;
     const data = await pool.query(sql);
     return data.rows;
   } catch (err) {
@@ -39,17 +39,19 @@ cards.createCard = async (args) => {
     const arr = [
       Number(args['user_id']),
       args['title'],
-      args['front'],
-      args['back'],
-      Number(args['difficulty']),
-      args['hints'],
-      args['scheduled'] === undefined ? formattedTime : args['scheduled'], // args['scheduled'] should have format 2022-12-28 12:34:56
+      args['card_front'],
+      args['card_back'],
+      args['correct_count'],
+      args['incorrect_count'],
+      // Number(args['difficulty']),
+      // args['hints'],
+      // args['scheduled'] === undefined ? formattedTime : args['scheduled'], // args['scheduled'] should have format 2022-12-28 12:34:56
     ];
 
-    const sql = `INSERT INTO Cards
-    (user_id, title, front, back, difficulty, hints, scheduled)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
-    RETURNING *;`;
+    const sql = `INSERT INTO cards
+      (user_id, title, card_front, card_back, correct_count, incorrect_count)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;`;
     // execute sql command
     const data = await pool.query(sql, arr);
     return data.rows[0];
@@ -62,7 +64,7 @@ cards.updateCard = async (args) => {
   try {
     // console.log('checking for update');
     // console.log(args);
-    const selectUserSQL = ` SELECT * FROM Cards WHERE _id=$1`;
+    const selectUserSQL = ` SELECT * FROM cards WHERE _id=$1`;
     const data1 = await pool.query(selectUserSQL, [Number(args['_id'])]);
     console.log('data1', data1.rows[0]);
 
@@ -77,7 +79,7 @@ cards.updateCard = async (args) => {
       args['scheduled'] === undefined ? data1.rows[0].scheduled : args['scheduled'],
     ];
 
-    const updateUserSQL = ` UPDATE Cards
+    const updateUserSQL = ` UPDATE cards
     SET title = $3,
     user_id = $2,
     front = $4,
@@ -97,7 +99,7 @@ cards.updateCard = async (args) => {
 cards.deleteCard = async (id) => {
   try {
 
-    sql = `DELETE FROM Cards WHERE _id=$1 RETURNING *`;
+    sql = `DELETE FROM cards WHERE _id=$1 RETURNING *`;
     const data = await pool.query(sql, [id]);
     return data.rows[0];
 
