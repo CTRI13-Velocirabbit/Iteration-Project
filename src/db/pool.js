@@ -21,7 +21,7 @@ module.exports = {
         ? `\'${params[index - 1]}\'`
         : params[index - 1];
     });
-    console.log('running sql command: ', sqlCommand);
+    // console.log('running sql command: ', sqlCommand);
 
     // return result of executing sql command
     return pool.query(text, params, callback);

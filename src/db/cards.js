@@ -1,8 +1,8 @@
 const pool = require('./pool.js');
 
-const obj = {};
+const cards = {};
 
-obj.readCard = async (id) => {
+cards.readCard = async (id) => {
   try {
     const sql = `SELECT *
     FROM Cards
@@ -11,22 +11,22 @@ obj.readCard = async (id) => {
     // TODO: validate that there is only one row
     return data.rows[0];
   } catch (err) {
-    throw `In db.js:obj.readCard: ${err.message}`;
+    throw `In db.js:cards.readCard: ${err.message}`;
   }
 };
 
-obj.readAllCards = async () => {
+cards.readAllCards = async () => {
   try {
     const sql = `SELECT *
     FROM Cards;`;
     const data = await pool.query(sql);
     return data.rows;
   } catch (err) {
-    throw `In db.js:obj.readAllCards: ${err.message}`;
+    throw `In db.js:cards.readAllCards: ${err.message}`;
   }
 };
 
-obj.createCard = async (args) => {
+cards.createCard = async (args) => {
   try {
     // this is the current time in format 2022-12-28 12:34:56
     const currentTime = new Date();
@@ -54,17 +54,17 @@ obj.createCard = async (args) => {
     const data = await pool.query(sql, arr);
     return data.rows[0];
   } catch (err) {
-    throw `In db.js:obj.createCard: ${err.message}`;
+    throw `In db.js:cards.createCard: ${err.message}`;
   }
 };
 
-obj.updateCard = async (args) => {
+cards.updateCard = async (args) => {
   try {
-    // console.log('checking for update'); 
-    // console.log(args); 
+    // console.log('checking for update');
+    // console.log(args);
     const selectUserSQL = ` SELECT * FROM Cards WHERE _id=$1`;
     const data1 = await pool.query(selectUserSQL, [Number(args['_id'])]);
-    console.log('data1', data1.rows[0]); 
+    console.log('data1', data1.rows[0]);
 
     const arr = [
       Number(args['_id']),
@@ -79,7 +79,7 @@ obj.updateCard = async (args) => {
 
     const updateUserSQL = ` UPDATE Cards
     SET title = $3,
-    user_id = $2, 
+    user_id = $2,
     front = $4,
     back = $5,
     difficulty = $6,
@@ -90,60 +90,22 @@ obj.updateCard = async (args) => {
     const data2 = await pool.query(updateUserSQL, arr);
 
   } catch (err) {
-    throw `In db.js: obj.updateCard: ${err.message}`; 
+    throw `In db.js: cards.updateCard: ${err.message}`;
   }
 }
 
-obj.deleteCard = async (id) => {
+cards.deleteCard = async (id) => {
   try {
 
-    sql = `DELETE FROM Cards WHERE _id=$1 RETURNING *`; 
+    sql = `DELETE FROM Cards WHERE _id=$1 RETURNING *`;
     const data = await pool.query(sql, [id]);
-    return data.rows[0]; 
+    return data.rows[0];
 
   } catch (err) {
-    throw `In db.js: obj.deleteCard: ${err.message}`; 
+    throw `In db.js: cards.deleteCard: ${err.message}`;
   }
 
 }
 
-obj.addUser = async (args) => {
-  try {
-    const arr = [
-      args['sub'],
-      args['picture'],
-      args['email'],
-      args['email_verified'],
-    ];
-    const sql = `INSERT INTO GoogleUserInfo
-    (sub, picture, email, email_verified)
-    VALUES ($1, $2, $3, $4)
-    RETURNING _id;`;
-    const data = await pool.query(sql, arr);
-    console.log(data.rows);
-    return data.rows[0]._id;
-  } catch (err) {
-    console.log('addUser', err);
-  }
-};
 
-obj.getUser = async (sub) => {
-  try {
-    const sql = `SELECT * 
-    FROM GoogleUserInfo
-    WHERE GoogleUserInfo.sub=$1`;
-    const data = await pool.query(sql, [sub]);
-    if (data.rows.length === 0) {
-      return null;
-    } else if (data.rows.length === 1) {
-      return data.rows[0];
-    } else {
-      console.warn('more than one user found');
-      throw '';
-    }
-  } catch {
-    console.log('crash in db.getUser');
-  }
-};
-
-module.exports = obj;
+module.exports = cards;

@@ -1,6 +1,8 @@
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../../secrets.js');
 const passport = require('passport');
-const db = require('../db/db.js');
+// const db = require('../db/db.js');
+// const cards = require('../db/cards.js');
+const users = require('../db/users.js');
 
 // this function takes an OAuth profile and searches the database for
 // a matching user. If found, the function returns the user info. If
@@ -9,8 +11,10 @@ const db = require('../db/db.js');
 // TODO: maybe I should store accessToken? It's used to access
 // google API on behalf of the user but at the moment I cannot thnk
 // of a use case
-const cb = async (request, accessToken, refreshToken, profile, done) => {
-  const userInfo = await db.getUser(profile.sub);
+const cb = async function(request, accessToken, refreshToken, profile, done) {
+  // console.log('L13 cb in auth.js:', arguments, 'the end.');
+  console.log('L14 cb in auth.js:', profile, 'the end.');
+  const userInfo = await users.getUser(profile.sub);
   // check if user is found
   if (userInfo) {
     // the first  argument of done is err. You must set err to null or else
@@ -20,7 +24,7 @@ const cb = async (request, accessToken, refreshToken, profile, done) => {
     // user not found so add user to db
     // profile._json contains the following fields:
     //   sub, picture, email, email_verified
-    const _id = await db.addUser(profile._json);
+    const _id = await users.addUser(profile._json);
     return done(null, { ...profile._json, _id });
   }
 };
