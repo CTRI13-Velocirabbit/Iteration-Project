@@ -51,16 +51,16 @@ const FlashCard = () => {
 
   return (
     <>
-      <div className="container d-flex justify-content-center text-center">
-        <div className="col">
-          <div id="card-title-wrapper" className={`${styles.containerbox}`}>
+      <div className='container d-flex justify-content-center text-center'>
+        <div className='col'>
+          <div id='card-title-wrapper' className={`${styles.containerbox}`}>
             <h1 className={`${styles.title}`}>
               {cardData.title ?? ' No Title'}
             </h1>
           </div>
 
           <div
-            id="card-frontCard"
+            id='card-frontCard'
             onClick={() => setShowFront(!showFront)}
             className={`${styles.containerbox2}`}
           >
@@ -68,6 +68,7 @@ const FlashCard = () => {
               {showFront ? cardData.front : cardData.back}
             </p>
           </div>
+
           <div className={styles.spaceBetween}>
             <button
               onClick={() => deleteCard()}
