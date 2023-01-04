@@ -13,7 +13,7 @@ const users = require('../db/users.js');
 // of a use case
 const cb = async function(request, accessToken, refreshToken, profile, done) {
   // console.log('L13 cb in auth.js:', arguments, 'the end.');
-  console.log('L14 cb in auth.js:', profile, 'the end.');
+  console.log('L16 cb in auth.js:', profile, 'the end.');
   const userInfo = await users.getUser(profile.sub);
   // check if user is found
   if (userInfo) {

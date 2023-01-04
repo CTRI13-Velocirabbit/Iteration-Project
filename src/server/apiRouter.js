@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/cards/nextCard/:id', async (req, res, next) => {
   try {
 
-    console.log('just checking')
+    // console.log('just checking');
 
     const _id = req.params.id;
     const row = await cards.readAllCards();
@@ -16,7 +16,7 @@ router.get('/cards/nextCard/:id', async (req, res, next) => {
       return element._id;
     })
 
-    console.log('ids', ids)
+    // console.log('ids', ids);
 
     let idx = ids.findIndex((element) => {
       return element === Number(_id);

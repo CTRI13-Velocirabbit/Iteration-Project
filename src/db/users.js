@@ -5,13 +5,16 @@ users.addUser = async (args) => {
   try {
     const arr = [
       args['sub'],
-      args['picture'],
+      // args['picture'],
       args['email'],
-      args['email_verified'],
+      // args['email_verified'],
     ];
-    const sql = `INSERT INTO GoogleUserInfo
-      (sub, picture, email, email_verified)
-      VALUES ($1, $2, $3, $4)
+    // const sql = `INSERT INTO GoogleUserInfo
+    //   (sub, picture, email, email_verified)
+    //   VALUES ($1, $2, $3, $4)
+    //   RETURNING _id;`;
+    const sql = `INSERT INTO users (sub, email)
+      VALUES ($1, $2)
       RETURNING _id;`;
     const data = await pool.query(sql, arr);
     // console.log(data.rows);
@@ -22,12 +25,12 @@ users.addUser = async (args) => {
 };
 
 users.getUser = async (sub) => {
-  console.log('L131 getUser:', sub, 'the end.');
+  console.log('L25 getUser:', sub, 'the end.');
   try {
     // const sql = `SELECT *
     //   FROM GoogleUserInfo
     //   WHERE GoogleUserInfo.sub=$1`;
-    const sql = `SELECT * FROM Users WHERE `
+    const sql = `SELECT * FROM users WHERE users.sub=$1`;
     const data = await pool.query(sql, [sub]);
     if (data.rows.length === 0) {
       return null;
