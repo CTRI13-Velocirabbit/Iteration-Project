@@ -5,8 +5,8 @@ export default function TagsDisplay({tags}){
 
     const tagsList = [];
 
-    tags.forEach(tag => {
-        tagsList.push(<button className={styles.tag}>tag.title</button>)
+    tags.forEach((tag, index) => {
+        tagsList.push(<button className={styles.tag} key={`tag${index}`}>tag.title</button>)
     });
 
     return (
