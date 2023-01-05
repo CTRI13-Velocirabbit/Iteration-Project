@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Card = ({ data }) => {
-  const { back, difficulty, front, hints, scheduled, title, user_id, _id } =
+  const { back, difficulty, card_front, hints, scheduled, title, user_id, _id } =
     data;
     const navigate = useNavigate();
   return (
@@ -13,7 +13,6 @@ const Card = ({ data }) => {
         <Link to={`/flashcard/${_id}`} >
         <div className={`${styles.backgroundGrey}`}>
         <div className={`${styles.title}`}>{title ?? 'no title'}</div>
-        <div className={`${styles.front}`}>{front ?? 'no front'}</div>
         </div>
         </Link>
     </>

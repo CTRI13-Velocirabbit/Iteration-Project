@@ -1,4 +1,4 @@
-#createNewCard {
+/* #createNewCard {
   background-color: #8fa582;
   color: white;
   font-family: 'Roboto', sans-serif;
@@ -11,10 +11,75 @@
 
 #createNewCard a {
   color: white;
+} */
+
+#createNewCard {
+  transform: translateX(5%);
+  width: 90%;
+  border-bottom: solid white 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.secondSet {
+  margin-top: 8px;
+  margin-bottom: 50px;
 }
 
 #cardsContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.filterDisplay {
+  width: 90%;
+  transform: translateX(5%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0 50px 0;
+  border-bottom: solid white 1px;
+}
+
+.filterDisplaySub {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filterTitle {
+  color: white;
+}
+
+.filterButton {
+  padding: 5px 20px 5px 20px;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+  font-size: 1.2rem;
+}
+
+.filterButtonInactive {
+}
+
+.filterButtonActive {
+  padding: 5px 20px 5px 20px;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+  font-size: 1.2rem;
+  background-color: red;
+}
+
+.mainButton {
+  font-size: 2rem;
+  width: 600px;
+  height: 80px;
+  border-radius: 10px;
+}
+
+.addButton {
+  width: 600px;
+  height: 50px;
+  border-radius: 10px;
 }

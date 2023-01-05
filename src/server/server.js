@@ -43,6 +43,7 @@ app.use(
   })
 );
 
+// const users = require('../db/users.js');
 app.get('/', (req, res) => {
   res.status(200).redirect('http://localhost:3000/');
 });

@@ -21,7 +21,7 @@ const Navbar = ({ leftItems }) => {
               const [title, url] = e;
               return (
                 <div className={styles.margin} key={uuid()}>
-                  <Link to={url}>{title}</Link>
+                  <Link to='/library'>Alinea</Link>
                 </div>
               );
             })}

@@ -1,9 +1,10 @@
 const path = require('path');
 const { Pool } = require('pg');
-const { DB_PASSWORD } = require(path.resolve(__dirname, '../../secrets.js'));
+// const { DB_PASSWORD } = require(path.resolve(__dirname, '../../secrets.js'));
+// // TODO: move this to secrets.js
+// const PG_URI = `postgres://tekdpxxk:${DB_PASSWORD}@mahmud.db.elephantsql.com/tekdpxxk`;
 
-// TODO: move thi to secrets.js
-const PG_URI = `postgres://tekdpxxk:${DB_PASSWORD}@mahmud.db.elephantsql.com/tekdpxxk`;
+const { PG_URI } = require(path.resolve(__dirname, '../../secrets.js'));
 
 // This pools multiple db accesses into one request
 const pool = new Pool({
@@ -20,7 +21,7 @@ module.exports = {
         ? `\'${params[index - 1]}\'`
         : params[index - 1];
     });
-    console.log('running sql command: ', sqlCommand);
+    // console.log('running sql command: ', sqlCommand);
 
     // return result of executing sql command
     return pool.query(text, params, callback);

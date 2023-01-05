@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { json, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useCards from '../Context/useCards';
 
 const FlashCard = () => {
   const { id } = useParams();
@@ -14,40 +15,14 @@ const FlashCard = () => {
   const [showFront, setShowFront] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // we cannot use async/await in useEffect without wrapping in outer function
-    const response = axios({
-      method: 'get',
-      withCredentials: true,
-      url: `http://localhost:8080/api/cards/${id}`,
-    }).then((res) => {
-      console.log(res.data);
-      setCardData(res.data);
-    });
-  }, []);
+  const { cards, setCards } = useCards();
+  const shuffledCards = [...cards].sort((a,b) => 0.5 - Math.random());
+  const [deck, setDeck] = useState(shuffledCards);
+  const [currentCard, setCurrentCard] = useState({});
 
   useEffect(() => {
-    // we cannot use async/await in useEffect without wrapping in outer function
-    const response = axios({
-      method: 'get',
-      withCredentials: true,
-      url: `http://localhost:8080/api/cards/nextCard/${id}`,
-    }).then((res) => {
-      console.log(res.data);
-      console.log('checking for res.data', res.data);
-      setnextCard(res.data);
-    });
-  }, []);
 
-  const deleteCard = () => {
-    const response = axios({
-      method: 'delete',
-      withCredentials: true,
-      url: `http://localhost:8080/api/cards/${id}`,
-    }).then((res) => {
-      window.location.href = `/library`;
-    });
-  };
+  })
 
   return (
     <>
@@ -55,7 +30,7 @@ const FlashCard = () => {
         <div className='col'>
           <div id='card-title-wrapper' className={`${styles.containerbox}`}>
             <h1 className={`${styles.title}`}>
-              {cardData.title ?? ' No Title'}
+              {currentCard.title ?? ' No Title'}
             </h1>
           </div>
 
@@ -65,7 +40,7 @@ const FlashCard = () => {
             className={`${styles.containerbox2}`}
           >
             <p className={`${styles.paragraph}`}>
-              {showFront ? cardData.front : cardData.back}
+              {showFront ? currentCard.front : currentCard.back}
             </p>
           </div>
 
@@ -90,3 +65,38 @@ const FlashCard = () => {
 };
 
 export default FlashCard;
+
+ // useEffect(() => {
+  //   // we cannot use async/await in useEffect without wrapping in outer function
+  //   const response = axios({
+  //     method: 'get',
+  //     withCredentials: true,
+  //     url: `http://localhost:8080/api/cards/${id}`,
+  //   }).then((res) => {
+  //     // console.log('L24 FlashCards:', res.data, 'L24 FlashCards:');
+  //     setCardData(res.data);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   // we cannot use async/await in useEffect without wrapping in outer function
+  //   const response = axios({
+  //     method: 'get',
+  //     withCredentials: true,
+  //     url: `http://localhost:8080/api/cards/nextCard/${id}`,
+  //   }).then((res) => {
+  //     console.log(res.data);
+  //     console.log('checking for res.data', res.data);
+  //     setnextCard(res.data);
+  //   });
+  // }, []);
+
+  // const deleteCard = () => {
+  //   const response = axios({
+  //     method: 'delete',
+  //     withCredentials: true,
+  //     url: `http://localhost:8080/api/cards/${id}`,
+  //   }).then((res) => {
+  //     window.location.href = `/library`;
+  //   });
+  // };
