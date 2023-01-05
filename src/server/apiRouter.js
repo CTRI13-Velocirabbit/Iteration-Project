@@ -1,6 +1,7 @@
 // const db = require('../db/db.js');
 const cards = require('../db/cards.js');
 const tags = require('../db/tags.js');
+const junctions = require('../db/junctions.js');
 // const users = require('../db/users.js');
 
 const express = require('express');
@@ -57,12 +58,13 @@ router.get('/cards/:id', async (req, res, next) => {
 
 router.get('/cards', async (req, res, next) => {
   try {
-    const allCards = await cards.readAllCards();
+    // const { id } = req.params;
+    let allCards = await cards.readAllCards();
     const allTags = await tags.getUserTags();
-    res.status(200).json({
-      allCards: allCards,
-      allTags: allTags
-    });
+    if (allTags) {
+      allCards = await junctions.getTagsOfCards(allCards);
+    }
+    res.status(200).json({ allCards: allCards, allTags: allTags });
     // res.status(200).json(allCards);
 
   } catch (err) {
@@ -89,6 +91,7 @@ router.post('/cards', async (req, res, next) => {
 
     // console.log('creating data: ', data);
     const row = await cards.createCard(data);
+    // ????
     res.status(200).json(row);
   } catch (err) {
     next({

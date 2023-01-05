@@ -1,12 +1,15 @@
 const pool = require('./pool.js');
 const tags = {};
 
-tags.getUserTags = async () => {
+tags.getUserTags = async (id) => {
   try {
-    const sql = `SELECT * FROM tags;`;
+    const sql = `SELECT * FROM tags
+      WHERE tags.user_id = 4;`;
     const data = await pool.query(sql);
-    console.log('tags:', data);
-    return data.rows;
+    // console.log('tags:', data.rows);
+    // if (data.rows === undein)
+    // const map =
+    return (data.rows);
   } catch (err) {
     throw `In tags.getUserTags: ${err.message}`;
   }

@@ -4,8 +4,7 @@ const cards = {};
 
 cards.readCard = async (id) => {
   try {
-    const sql = `SELECT *
-      FROM cards
+    const sql = `SELECT * FROM cards
       WHERE _id=$1;`;
     const data = await pool.query(sql, [id]);
     // TODO: validate that there is only one row
@@ -15,11 +14,12 @@ cards.readCard = async (id) => {
   }
 };
 
-cards.readAllCards = async () => {
+cards.readAllCards = async (id) => {
   try {
-    const sql = `SELECT * FROM cards;`;
+    const sql = `SELECT * FROM cards`;
+      //WHERE cards.user_id=$1;
     const data = await pool.query(sql);
-    // console.log('readAllCards', data.rows);
+    console.log('readAllCards', data.rows);
     return data.rows;
   } catch (err) {
     throw `In db.js:cards.readAllCards: ${err.message}`;
@@ -66,7 +66,7 @@ cards.updateCard = async (args) => {
     // console.log(args);
     const selectUserSQL = ` SELECT * FROM cards WHERE _id=$1`;
     const data1 = await pool.query(selectUserSQL, [Number(args['_id'])]);
-    console.log('data1', data1.rows[0]);
+    // console.log('data1', data1.rows[0]);
 
     const arr = [
       Number(args['_id']),
@@ -78,7 +78,7 @@ cards.updateCard = async (args) => {
       Number(args['incorrect_count']) === undefined ? data1.rows[0].incorrect_count : Number(args['incorrect_count']),
     ];
 
-    const updateUserSQL = ` UPDATE cards
+    const updateUserSQL = `UPDATE cards
       SET user_id = $2,
       title = $3,
       card_front = $4,
