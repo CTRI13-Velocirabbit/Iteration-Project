@@ -45,7 +45,7 @@ const App = () => {
                 <Route exact path="/" element={<LandingPage />} />
                 <Route exact path="/library" element={<Home />} />
                 {/* <Route exact path="/createCard" element={<CreateCard />} /> */}
-                <Route exact path="/flashcard/:id" element={<FlashCard />} />
+                <Route exact path="/flashcard" element={<FlashCard />} />
               </Routes>
             </div>
           </BrowserRouter>

@@ -3,8 +3,7 @@ const tags = {};
 
 tags.getUserTags = async (id) => {
   try {
-    const sql = `SELECT * FROM tags
-      WHERE tags.user_id = 4;`;
+    const sql = `SELECT * FROM tags;`;
     const data = await pool.query(sql);
     // console.log('tags:', data.rows);
     // if (data.rows === undein)
