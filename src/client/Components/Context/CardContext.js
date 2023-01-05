@@ -12,3 +12,6 @@ export const CardProvider = ({children}) => {
     )
 }
 export default CardContext;
+// export const useCards = () => {
+//     return useContext(CardContext);
+// }

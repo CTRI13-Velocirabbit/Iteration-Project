@@ -7,20 +7,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import HomeFilter from './HomeFilter';
 import CreateCard from '../CreateCard/CreateCard';
 import CreateTag from './CreateTag';
+import useCards from '../Context/useCards';
 
 const Home = () => {
   const [arrCards, setArrCards] = useState([]);
+  const [arrTags, setArrTags] = useState([]);
   const [createCardIsOpen, setCreateCardIsOpen] = useState(false);
   const [createFilterIsOpen, setCreateFilterIsOpen] = useState(false);
-
+  const initialFilterStates = arrTags.map((ele) => false);
+  const [filterStates, setFilterStates] = useState(initialFilterStates);
+  const { cards, setCards } = useCards();
   const navigate = useNavigate();
 
-  // Filter placeholders
-  const filters = [1, 2, 3, 4, 5, 6];
-  const initialFilterStates = filters.map((ele) => false);
-  // const filters = ['a', 'b', 'c']
-  const [filterStates, setFilterStates] = useState(initialFilterStates);
-
+  console.log(useCards());
   // const [filterStates, setFilterStates] = useState(initialFilterStates);
 
   useEffect(() => {
@@ -30,16 +29,22 @@ const Home = () => {
       withCredentials: true,
       url: 'http://localhost:8080/api/cards',
     }).then((res) => {
-      console.log('L33 Home:', res.data);
-      setArrCards(res.data);
+      //console.log('L33 Home:', res.data);
+      setArrCards(res.data.allCards);
+      setArrTags(res.data.allTags);
     });
   }, []);
 
-  useEffect(() => console.log(filterStates));
+  useEffect(
+    () => {
+      setCards(arrCards);
+      console.log(cards);
+    });
+
   return (
     <>
       <HomeFilter
-        filters={filters}
+        filters={arrTags}
         openCreateFilter={setCreateFilterIsOpen}
         filterStates={filterStates}
         setFilterStates={setFilterStates}
@@ -63,16 +68,23 @@ const Home = () => {
       <CreateCard
         isOpen={createCardIsOpen}
         setIsOpen={setCreateCardIsOpen}
-        tags={filters}
+        tags={arrTags}
+        cards={[...arrCards]}
+        setCards={setArrCards}
       />
       <CreateTag
         isOpen={createFilterIsOpen}
         setIsOpen={setCreateFilterIsOpen}
+        tags={[...arrTags]}
+        setTags={setArrTags}
       />
-      <div id={styles.cardsContainer}>
-        {/* {arrCards.cards.map((card) => (
-          <Card data={card} key={uuid()} />
-        ))} */}
+      <div>
+        <h3>Index Cards</h3>
+        <div id={styles.cardsContainer}>
+          {arrCards.map((card) => (
+            <Card data={card} key={uuid()} />
+          ))}
+        </div>
       </div>
     </>
   );

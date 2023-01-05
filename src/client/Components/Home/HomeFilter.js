@@ -15,6 +15,7 @@ export default function HomeFilter({
       <FilterButton
         key={`Filter${index}`}
         index={index}
+        name={filters[index].tag_name}
         filterStates={filterStates}
         setFilterStates={setFilterStates}
       />

@@ -13,7 +13,6 @@ const Card = ({ data }) => {
         <Link to={`/flashcard/${_id}`} >
         <div className={`${styles.backgroundGrey}`}>
         <div className={`${styles.title}`}>{title ?? 'no title'}</div>
-        <div className={`${styles.front}`}>{card_front ?? 'no front'}</div>
         </div>
         </Link>
     </>

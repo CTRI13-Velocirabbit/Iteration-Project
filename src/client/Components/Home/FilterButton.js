@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './home.module.css';
 
-export default function FilterButton({ index, filterStates, setFilterStates }) {
+export default function FilterButton({ index, filterStates, setFilterStates, name }) {
   const changeState = () => {
     const newState = [...filterStates];
     newState[index] = !newState[index];
@@ -14,6 +14,6 @@ export default function FilterButton({ index, filterStates, setFilterStates }) {
         filterStates[index] ? styles.filterButtonActive : styles.filterButton
       }
       onClick={changeState}
-    >{`Filter ${index}`}</button>
+    >{name}</button>
   );
 }

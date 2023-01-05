@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDom from 'react-dom';
 import styles from '../CreateCard/CreateCard.module.css';
 
-export default function CreateTag({ isOpen, setIsOpen, tags }) {
+export default function CreateTag({ isOpen, setIsOpen, tags, setTags }) {
   const [tagName, setTagName] = useState('');
 
   const saveTag = () => {
@@ -13,7 +13,12 @@ export default function CreateTag({ isOpen, setIsOpen, tags }) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    });
+    })
+    .then(() => {
+      tags.push({tag_name: tagName});
+      setTags(tags);
+    }
+    )
   };
 
   if (!isOpen) return null;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CreateCard.module.css';
 
 export default function TagsDisplay({ tags }) {
@@ -13,7 +13,7 @@ export default function TagsDisplay({ tags }) {
         key={`tag${index}`}
         onClick={() => changeState(index)}
       >
-        {`Tag ${index}`}
+        {tags[index].tag_name}
       </button>
     );
   });
@@ -23,8 +23,6 @@ export default function TagsDisplay({ tags }) {
     newState[index] = !newState[index];
     setTagStates(newState);
   };
-
-  useEffect(() => console.log(tagStates));
 
   return <div id={styles.tagsDisplay}>{tagsList}</div>;
 }
