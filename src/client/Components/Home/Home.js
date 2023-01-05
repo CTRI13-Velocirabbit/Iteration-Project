@@ -32,14 +32,9 @@ const Home = () => {
       //console.log('L33 Home:', res.data);
       setArrCards(res.data.allCards);
       setArrTags(res.data.allTags);
+      setCards(res.data.allCards.filter((card) => card.user_id === 6));
     });
   }, []);
-
-  useEffect(
-    () => {
-      setCards(arrCards);
-      console.log(cards);
-    });
 
   return (
     <>
@@ -81,9 +76,12 @@ const Home = () => {
       <div>
         <h3>Index Cards</h3>
         <div id={styles.cardsContainer}>
-          {arrCards.map((card) => (
-            <Card data={card} key={uuid()} />
-          ))}
+          {arrCards.map((card) => {
+            if (filterStates[0] && card.user_id === 6)
+              return <Card data={card} key={uuid()} />;
+            if (filterStates[1] && card.user_id === 7)
+              return <Card data={card} key={uuid()} />;
+          })}
         </div>
       </div>
     </>
