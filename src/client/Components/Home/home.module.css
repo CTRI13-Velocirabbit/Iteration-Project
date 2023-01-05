@@ -33,7 +33,7 @@
   justify-content: center;
 }
 
-.filterDisplay{
+.filterDisplay {
   width: 90%;
   transform: translateX(5%);
   display: flex;
@@ -53,16 +53,23 @@
   color: white;
 }
 
-.filterButton{
+.filterButton {
   padding: 5px 20px 5px 20px;
   border-radius: 10px;
   margin: 0 5px 0 5px;
   font-size: 1.2rem;
 }
 
-.filterButtonInactive{}
+.filterButtonInactive {
+}
 
-.filterButtonActive{}
+.filterButtonActive {
+  padding: 5px 20px 5px 20px;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+  font-size: 1.2rem;
+  background-color: red;
+}
 
 .mainButton {
   font-size: 2rem;

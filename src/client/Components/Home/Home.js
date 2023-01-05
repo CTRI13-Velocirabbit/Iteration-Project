@@ -6,7 +6,7 @@ import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import HomeFilter from './HomeFilter';
 import CreateCard from '../CreateCard/CreateCard';
-import CreateFilter from './CreateFilter';
+import CreateTag from './CreateTag';
 
 const Home = () => {
   const [arrCards, setArrCards] = useState([]);
@@ -16,10 +16,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   // Filter placeholders
-  const filters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const initialFilterStates = filters.map(ele => false);
+  const filters = [1, 2, 3, 4, 5, 6];
+  const initialFilterStates = filters.map((ele) => false);
   // const filters = ['a', 'b', 'c']
-  // const [filterState, setFilterState] = useState({a: false, b: false, c: false})
+  const [filterStates, setFilterStates] = useState(initialFilterStates);
 
   // const [filterStates, setFilterStates] = useState(initialFilterStates);
 
@@ -35,25 +35,44 @@ const Home = () => {
     });
   }, []);
 
+  useEffect(() => console.log(filterStates));
   return (
     <>
-      <HomeFilter filters={filters} openCreateFilter={setCreateFilterIsOpen} />
+      <HomeFilter
+        filters={filters}
+        openCreateFilter={setCreateFilterIsOpen}
+        filterStates={filterStates}
+        setFilterStates={setFilterStates}
+      />
       <div id={styles.createNewCard}>
-        <button className={styles.mainButton} onClick={() => navigate('/flashcard')}>
+        <button
+          className={styles.mainButton}
+          onClick={() => navigate('/flashcard')}
+        >
           Start Studying
         </button>
         <div className={styles.secondSet}>
-          <button className={styles.addButton} onClick={() => setCreateCardIsOpen(!createCardIsOpen)}>
+          <button
+            className={styles.addButton}
+            onClick={() => setCreateCardIsOpen(!createCardIsOpen)}
+          >
             Create New Card
           </button>
         </div>
       </div>
-        <CreateCard isOpen={createCardIsOpen} setIsOpen={setCreateCardIsOpen} tags={filters}/>
-        <CreateFilter isOpen={createFilterIsOpen} setIsOpen={setCreateFilterIsOpen} />
+      <CreateCard
+        isOpen={createCardIsOpen}
+        setIsOpen={setCreateCardIsOpen}
+        tags={filters}
+      />
+      <CreateTag
+        isOpen={createFilterIsOpen}
+        setIsOpen={setCreateFilterIsOpen}
+      />
       <div id={styles.cardsContainer}>
-        {arrCards.map((card) => (
+        {/* {arrCards.cards.map((card) => (
           <Card data={card} key={uuid()} />
-        ))}
+        ))} */}
       </div>
     </>
   );

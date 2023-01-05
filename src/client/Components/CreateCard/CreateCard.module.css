@@ -68,23 +68,31 @@
   font-size: 1.2rem;
 }
 
-#overlay{
+#overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.tag{
+.tag {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px 5px 10px;
   font-size: 1.2rem;
 }
 
-#tagsDisplay{
+.tagActive {
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px 10px 5px 10px;
+  font-size: 1.2rem;
+  background-color: red;
+}
+
+#tagsDisplay {
   border: solid red 2px;
   display: flex;
   flex-wrap: wrap;
