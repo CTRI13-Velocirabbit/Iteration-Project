@@ -9,7 +9,6 @@ import useCards from '../Context/useCards';
 
 const FlashCard = () => {
   const { id } = useParams();
-  console.log(id);
   const [cardData, setCardData] = useState({});
   const [nextCard, setnextCard] = useState({});
   const [showFront, setShowFront] = useState(true);
@@ -17,14 +16,37 @@ const FlashCard = () => {
 
   const { cards, setCards } = useCards();
   const shuffledCards = [...cards].sort((a,b) => 0.5 - Math.random());
+  const numCards = shuffledCards.length;
+  const [currentCard, setCurrentCard] = useState(shuffledCards.pop());
   const [deck, setDeck] = useState(shuffledCards);
-  const [currentCard, setCurrentCard] = useState({});
+  const [completedCards, setCompletedCards] = useState([]);
+  const [studyComplete, setStudyComplete] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
 
-  useEffect(() => {
+  const getNextCard = (isCorrect) => {
+    const newCompletedCards = [...completedCards];
+    const newCurrentCard = {...currentCard};
+    const newDeck = [...deck];
+    if (isCorrect) {
+      setCorrectCount(correctCount + 1);
+      newCurrentCard.correct_count++;
+    } else newCurrentCard.incorrect_count++;
+    newCompletedCards.push(newCurrentCard);
+    setCompletedCards(newCompletedCards);
+    (newDeck.length) ? setCurrentCard(newDeck.pop()) : setStudyComplete(true);
+    setDeck(newDeck);
+  }
 
-  })
+  const backHome = () => {
+    navigate('/library');
+  }
 
   return (
+    studyComplete ?
+    <div>
+      <h3>{`Congrats! You have completed the current study session! ${correctCount} / ${numCards} correct.`}</h3>
+      <button onClick={() => backHome()}>Home</button>
+    </div> :
     <>
       <div className='container d-flex justify-content-center text-center'>
         <div className='col'>
@@ -40,22 +62,22 @@ const FlashCard = () => {
             className={`${styles.containerbox2}`}
           >
             <p className={`${styles.paragraph}`}>
-              {showFront ? currentCard.front : currentCard.back}
+              {showFront ? `front: ${currentCard.card_front}` : `back: ${currentCard.card_back}`}
             </p>
           </div>
 
           <div className={styles.spaceBetween}>
             <button
-              onClick={() => deleteCard()}
+              onClick={() => getNextCard(true)}
               className={`${styles.addCardBtn}`}
             >
-              DELETE CARD
+              Correct!
             </button>
             <button
-              onClick={() => (window.location.href = `/flashcard/${nextCard}`)}
+              onClick={() => getNextCard(false)}
               className={`${styles.addCardBtn}`}
             >
-              NEXT CARD
+              Incorrect!
             </button>
           </div>
         </div>
