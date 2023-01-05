@@ -101,7 +101,7 @@ router.put('/cards/:id', async (req, res, next) => {
 
     const row = await cards.updateCard(data);
     res.status(200).json(row);
-    console.log('updated sucessfully')
+    console.log('updated sucessfully');
     return next();
 
   } catch(err) {
@@ -115,12 +115,11 @@ router.put('/cards/:id', async (req, res, next) => {
 
 router.delete('/cards/:id', async (req, res, next) => {
   try {
-
     const _id = req.params.id;
     const row = await cards.deleteCard(_id);
     if(row === undefined) throw `no card with id=${_id} was not found`;
     res.status(200).json(row);
-    console.log('deleted sucessfully')
+    console.log('deleted sucessfully');
     return next();
 
   } catch(err) {

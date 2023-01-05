@@ -6,7 +6,7 @@ tags.getUserTags = async () => {
     const sql = `SELECT * FROM tags WHERE tags.user_id=$`;
   } catch() {}
 };
-// tags.addTag = async () => {
+// tags.addNewTag = async () => {
 //   try {} catch() {}
 // };
 // tags.deleteTag = async () => {
