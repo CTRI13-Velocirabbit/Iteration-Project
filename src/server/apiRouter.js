@@ -70,8 +70,7 @@ router.get('/cards', async (req, res, next) => {
 router.post('/cards', async (req, res, next) => {
   try {
     // sanitize post data
-    const { user_id, title, card_front, card_back, correct_count, incorrect_count } =
-      req.body;
+    const { user_id, title, card_front, card_back, correct_count, incorrect_count } = req.body;
     const data = {
       user_id,
       title,
@@ -81,7 +80,7 @@ router.post('/cards', async (req, res, next) => {
       incorrect_count
     };
 
-    // console.log('creating data: ', data);
+    console.log('creating data: ', data);
     const row = await cards.createCard(data);
     res.status(200).json(row);
   } catch (err) {
