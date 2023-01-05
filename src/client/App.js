@@ -14,7 +14,7 @@ const App = () => {
   const leftItems = {
     home: '/library',
   };
-  const [userId, setUserId] = useState(null);
+
   // On first render, get user data
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,7 +24,6 @@ const App = () => {
       url: 'http://localhost:8080/auth/user',
     }).then((res) => {
       if (res.data) {
-        console.log('from login dispatch', res.data);
         dispatch(setEmail(res.data.email));
         //TODO: need to set userId
       }
