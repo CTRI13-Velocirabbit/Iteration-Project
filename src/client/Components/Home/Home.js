@@ -35,11 +35,13 @@ const Home = () => {
     });
   }, []);
 
-  useEffect(
-    () => {
-      setCards(arrCards);
-      console.log(cards);
+  useEffect(() => {
+    arrCards.sort((a, b) => {
+      a._id - b._id;
     });
+    setCards(arrCards);
+    console.log(cards);
+  });
 
   return (
     <>
