@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import CreateCard from './Components/CreateCard/CreateCard';
@@ -8,6 +8,8 @@ import LandingPage from './Components/LandingPage/LandingPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail } from './Redux/slices/userSlice';
 import axios from 'axios';
+import { CardProvider } from './Components/Context/CardContext';
+
 const App = () => {
   const leftItems = {
     home: '/library',
@@ -34,18 +36,20 @@ const App = () => {
       {!email ? (
         <LandingPage />
       ) : (
-        <BrowserRouter>
-          {/* Component 'Navbar' must be placed within browser router so that navbar links work */}
-          <Navbar leftItems={leftItems} />
-          <div>
-            <Routes>
-              <Route exact path="/" element={<LandingPage />} />
-              <Route exact path="/library" element={<Home />} />
-              <Route exact path="/createCard" element={<CreateCard />} />
-              <Route exact path="/flashcard/:id" element={<FlashCard />} />
-            </Routes>
-          </div>
-        </BrowserRouter>
+        <CardProvider>
+          <BrowserRouter>
+            {/* Component 'Navbar' must be placed within browser router so that navbar links work */}
+            <Navbar leftItems={leftItems} />
+            <div>
+              <Routes>
+                <Route exact path="/" element={<LandingPage />} />
+                <Route exact path="/library" element={<Home />} />
+                {/* <Route exact path="/createCard" element={<CreateCard />} /> */}
+                <Route exact path="/flashcard/:id" element={<FlashCard />} />
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </CardProvider>
       )}
     </>
   );

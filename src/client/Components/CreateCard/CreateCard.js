@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactDom from 'react-dom';
 import TagsDisplay from './TagsDisplay';
 
-const CreateCard = ({isOpen, setIsOpen, tags}) => {
+const CreateCard = ({isOpen, setIsOpen, tags, cards, setCards}) => {
   const cardTemplate = {user_id: 6, title:'', card_front:'', card_back:'', correct_count: 0, incorrect_count: 0};
   const [card, setCard] = useState(cardTemplate);
   const navigate = useNavigate();
@@ -19,6 +19,10 @@ const CreateCard = ({isOpen, setIsOpen, tags}) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+    })
+    .then(() =>{
+      cards.push(card);
+      setCards(cards);
     })
   }
   if (!isOpen) return null;
