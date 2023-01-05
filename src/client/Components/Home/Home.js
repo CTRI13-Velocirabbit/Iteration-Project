@@ -20,7 +20,7 @@ const Home = () => {
   const initialFilterStates = filters.map(ele => false);
   // const filters = ['a', 'b', 'c']
   // const [filterState, setFilterState] = useState({a: false, b: false, c: false})
-  
+
   // const [filterStates, setFilterStates] = useState(initialFilterStates);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const Home = () => {
       withCredentials: true,
       url: 'http://localhost:8080/api/cards',
     }).then((res) => {
+      console.log('L33 Home:', res.data);
       setArrCards(res.data);
     });
   }, []);
@@ -38,11 +39,11 @@ const Home = () => {
     <>
       <HomeFilter filters={filters} openCreateFilter={setCreateFilterIsOpen} />
       <div id={styles.createNewCard}>
-        <button className={styles.mainButton} onClick={() => navigate('/flashcard')}> 
+        <button className={styles.mainButton} onClick={() => navigate('/flashcard')}>
           Start Studying
         </button>
         <div className={styles.secondSet}>
-          <button className={styles.addButton} onClick={() => setCreateCardIsOpen(!createCardIsOpen)}> 
+          <button className={styles.addButton} onClick={() => setCreateCardIsOpen(!createCardIsOpen)}>
             Create New Card
           </button>
         </div>

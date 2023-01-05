@@ -1,11 +1,11 @@
 const pool = require('./pool.js');
 const junctions = {};
 
-junctions.getTagsOfCards = async (???) => {
-  try {
+// junctions.getTagsOfCards = async (???) => {
+//   try {
 
-  } catch() {}
-};
+//   } catch() {}
+// };
 // junctions.addTagToCard = async () => {
 //   try {} catch() {}
 // };

@@ -25,7 +25,7 @@ users.addUser = async (args) => {
 };
 
 users.getUser = async (sub) => {
-  console.log('in getUser!');
+  // console.log('in getUser!');
   try {
     // const sql = `SELECT *
     //   FROM GoogleUserInfo

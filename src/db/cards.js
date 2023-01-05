@@ -5,8 +5,8 @@ const cards = {};
 cards.readCard = async (id) => {
   try {
     const sql = `SELECT *
-    FROM cards
-    WHERE _id=$1;`;
+      FROM cards
+      WHERE _id=$1;`;
     const data = await pool.query(sql, [id]);
     // TODO: validate that there is only one row
     return data.rows[0];
@@ -17,9 +17,9 @@ cards.readCard = async (id) => {
 
 cards.readAllCards = async () => {
   try {
-    const sql = `SELECT *
-    FROM cards;`;
+    const sql = `SELECT * FROM cards;`;
     const data = await pool.query(sql);
+    // console.log('readAllCards', data.rows);
     return data.rows;
   } catch (err) {
     throw `In db.js:cards.readAllCards: ${err.message}`;
