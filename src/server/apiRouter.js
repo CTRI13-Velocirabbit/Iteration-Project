@@ -1,5 +1,6 @@
 // const db = require('../db/db.js');
 const cards = require('../db/cards.js');
+const tags = require('../db/tags.js');
 // const users = require('../db/users.js');
 
 const express = require('express');
@@ -56,8 +57,14 @@ router.get('/cards/:id', async (req, res, next) => {
 
 router.get('/cards', async (req, res, next) => {
   try {
-    const row = await cards.readAllCards();
-    res.status(200).json(row);
+    const allCards = await cards.readAllCards();
+    const allTags = await tags.getUserTags();
+    res.status(200).json({
+      allCards: allCards,
+      allTags: allTags
+    });
+    // res.status(200).json(allCards);
+
   } catch (err) {
     next({
       log: 'error getting cards',
@@ -80,12 +87,26 @@ router.post('/cards', async (req, res, next) => {
       incorrect_count
     };
 
-    console.log('creating data: ', data);
+    // console.log('creating data: ', data);
     const row = await cards.createCard(data);
     res.status(200).json(row);
   } catch (err) {
     next({
       log: 'error creating card',
+      status: 500,
+      message: { err: err },
+    });
+  }
+});
+router.post('/tags', async (req, res, next) => {
+  try {
+    const { user_id, tag_name } = req.body;
+    const data = { user_id, tag_name };
+    const newTag = await tags.addNewTag(data);
+    res.status(200).json(newTag);
+  } catch(err) {
+    next({
+      log: 'error creating tag',
       status: 500,
       message: { err: err },
     });
@@ -100,7 +121,7 @@ router.put('/cards/:id', async (req, res, next) => {
 
     const row = await cards.updateCard(data);
     res.status(200).json(row);
-    console.log('updated sucessfully')
+    console.log('updated sucessfully');
     return next();
 
   } catch(err) {
@@ -114,12 +135,11 @@ router.put('/cards/:id', async (req, res, next) => {
 
 router.delete('/cards/:id', async (req, res, next) => {
   try {
-
     const _id = req.params.id;
     const row = await cards.deleteCard(_id);
     if(row === undefined) throw `no card with id=${_id} was not found`;
     res.status(200).json(row);
-    console.log('deleted sucessfully')
+    console.log('deleted sucessfully');
     return next();
 
   } catch(err) {

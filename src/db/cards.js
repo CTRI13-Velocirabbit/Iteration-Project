@@ -5,8 +5,8 @@ const cards = {};
 cards.readCard = async (id) => {
   try {
     const sql = `SELECT *
-    FROM cards
-    WHERE _id=$1;`;
+      FROM cards
+      WHERE _id=$1;`;
     const data = await pool.query(sql, [id]);
     // TODO: validate that there is only one row
     return data.rows[0];
@@ -17,9 +17,9 @@ cards.readCard = async (id) => {
 
 cards.readAllCards = async () => {
   try {
-    const sql = `SELECT *
-    FROM cards;`;
+    const sql = `SELECT * FROM cards;`;
     const data = await pool.query(sql);
+    // console.log('readAllCards', data.rows);
     return data.rows;
   } catch (err) {
     throw `In db.js:cards.readAllCards: ${err.message}`;
@@ -28,12 +28,12 @@ cards.readAllCards = async () => {
 
 cards.createCard = async (args) => {
   try {
-    // this is the current time in format 2022-12-28 12:34:56
-    const currentTime = new Date();
-    const formattedTime = currentTime
-      .toISOString()
-      .slice(0, 19)
-      .replace('T', ' ');
+    // // this is the current time in format 2022-12-28 12:34:56
+    // const currentTime = new Date();
+    // const formattedTime = currentTime
+    //   .toISOString()
+    //   .slice(0, 19)
+    //   .replace('T', ' ');
 
     // parameterize sql arguments to prevent attacks
     const arr = [
@@ -72,22 +72,20 @@ cards.updateCard = async (args) => {
       Number(args['_id']),
       args['user_id'] === undefined ? data1.rows[0].user_id : args['user_id'],
       args['title'] === undefined ? data1.rows[0].title : args['title'],
-      args['front'] === undefined ? data1.rows[0].front : args['front'],
-      args['back'] === undefined ? data1.rows[0].back : args['back'],
-      Number(args['difficulty']) === undefined ? data1.rows[0].difficulty : args['difficulty'],
-      args['hints'] === undefined ? data1.rows[0].hints : args['hints'],
-      args['scheduled'] === undefined ? data1.rows[0].scheduled : args['scheduled'],
+      args['card_front'] === undefined ? data1.rows[0].card_front : args['card_front'],
+      args['card_back'] === undefined ? data1.rows[0].card_back : args['card_back'],
+      Number(args['correct_count']) === undefined ? data1.rows[0].correct_count : Number(args['correct_count']),
+      Number(args['incorrect_count']) === undefined ? data1.rows[0].incorrect_count : Number(args['incorrect_count']),
     ];
 
     const updateUserSQL = ` UPDATE cards
-    SET title = $3,
-    user_id = $2,
-    front = $4,
-    back = $5,
-    difficulty = $6,
-    hints = $7,
-    scheduled = $8
-    WHERE _id = $1`;
+      SET user_id = $2,
+      title = $3,
+      card_front = $4,
+      card_back = $5,
+      correct_count = $6,
+      incorrect_count = $7,
+      WHERE _id = $1`;
 
     const data2 = await pool.query(updateUserSQL, arr);
 

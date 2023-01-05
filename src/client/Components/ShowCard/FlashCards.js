@@ -21,7 +21,7 @@ const FlashCard = () => {
       withCredentials: true,
       url: `http://localhost:8080/api/cards/${id}`,
     }).then((res) => {
-      console.log(res.data);
+      // console.log('L24 FlashCards:', res.data, 'L24 FlashCards:');
       setCardData(res.data);
     });
   }, []);
